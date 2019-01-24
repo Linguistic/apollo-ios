@@ -233,7 +233,7 @@ public final class ApolloStore {
 
     private func write(object: JSONObject, forSelections selections: [GraphQLSelection], withKey key: CacheKey, variables: GraphQLMap?) throws {
       let normalizer = GraphQLResultNormalizer()
-      let executor = makeExecutor { $0.responseKeyForField }
+      let executor = makeExecutor()
       try executor.execute(selections: selections, on: object, withKey: key, variables: variables, accumulator: normalizer)
       .flatMap {
         self.cache.merge(records: $0)
